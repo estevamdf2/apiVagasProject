@@ -33,14 +33,11 @@ class VagaDetalhes(APIView):
     def get(self, request, pk):
         try:
             if pk == "0":
-                return JsonResponse({"Mensagem: O ID deve ser maior que zero."},
-                                    status=status.HTTP_400_BAD_REQUEST)
+                return JsonResponse({'Mensagem': "O ID deve ser maior que zero."},status=status.HTTP_400_BAD_REQUEST)
             vaga = Vaga.objects.get(pk=pk)
             serializer = VagaSerializer(vaga)
             return Response(serializer.data)
         except Vaga.DoesNotExist:
-            return JsonResponse({"Mensagem: A vaga não existe."},
-                                    status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse({'Mensagem': "A vaga não existe."},status=status.HTTP_404_NOT_FOUND)
         except Exception:
-            return JsonResponse({"Mensagem: Ocorreu um erro no servidor."},
-                                    status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return JsonResponse({'Mensagem': "Ocorreu um erro no servidor."},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
